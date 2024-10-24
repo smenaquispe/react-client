@@ -1,4 +1,4 @@
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "auth-passport-provider";
 import BaseButton from "./BaseButton";
 
 export const LogoutButtonWithPassport = () => {
