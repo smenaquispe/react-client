@@ -5,7 +5,7 @@ const LoginButtonWithPassport = () => {
 
   const { login } = useAuth();
 
-    return <BaseButton onClick={login} color="red" key={"button_login_with_passport"}>Login with Passport</BaseButton>;
+    return <BaseButton onClick={login} color="green" key={"button_login_with_passport"}>Login with Passport</BaseButton>;
 };
 
 export default LoginButtonWithPassport;

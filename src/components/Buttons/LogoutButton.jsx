@@ -8,7 +8,7 @@ const LogoutButton = () => {
 
   const logout = customUser ? customLogout : auth0Logout; // Llamar al logout adecuado
 
-  return <BaseButton onClick={logout} color='green'>Log Out</BaseButton>
+  return <BaseButton onClick={logout} color='red'>Log Out</BaseButton>
 
 };
 
