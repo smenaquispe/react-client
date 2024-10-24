@@ -19,7 +19,12 @@ root.render(
   //   <App />
   // </Auth0Provider>,
   <BrowserRouter>
-    <AuthProvider>
+    <AuthProvider
+        clientId={import.meta.env.VITE_SIMPLE_AUTH_CLIENT_ID}
+        clientSecret={import.meta.env.VITE_SIMPLE_AUTH_CLIENT_SECRET}
+        redirectUri={window.location.origin}
+        authUrl={import.meta.env.VITE_SIMPLE_AUTH_URL}
+    >
       <App />
     </AuthProvider>
   </BrowserRouter>

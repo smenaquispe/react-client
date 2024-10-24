@@ -26,7 +26,7 @@ const authReducer = (state, action) => {
   }
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children, clientId, clientSecret, redirectUri, authUrl }) => {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
   const [loading, setLoading] = useState(true);
 
@@ -38,11 +38,11 @@ export const AuthProvider = ({ children }) => {
 
       if (code) {
         try {
-          const response = await axios.post('http://localhost:6001/oauth/token', {
+          const response = await axios.post(`${authUrl}/token`, {
             grant_type: 'authorization_code',
-            client_id: '9d50dc8c-3ba4-43fd-ac3e-0a2145fca0f0', // Reemplaza con tu client_id
-            client_secret: 'S6T5UQUNqwfMX96PSffr7iWw6N9lXSbFKtMlAClG', // Reemplaza con tu client_secret
-            redirect_uri: 'http://localhost:3000', // URL de redireccionamiento
+            client_id: clientId,
+            client_secret: clientSecret,
+            redirect_uri: redirectUri,
             code: code,
           });
 
@@ -60,12 +60,10 @@ export const AuthProvider = ({ children }) => {
     };
 
     fetchToken();
-  }, []);
+  }, [clientId, clientSecret, redirectUri, authUrl]);
 
   const login = () => {
-    const clientId = '9d50dc8c-3ba4-43fd-ac3e-0a2145fca0f0';
-    const redirectUri = encodeURIComponent('http://localhost:3000');
-    const authorizationUrl = `http://localhost:6001/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope`;
+    const authorizationUrl = `${authUrl}/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope`;
 
     window.location.href = authorizationUrl; // Redirigir a la página de autorización
   };
