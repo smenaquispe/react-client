@@ -38,7 +38,7 @@ export const AuthProvider = ({ children, clientId, clientSecret, redirectUri, au
 
       if (code) {
         try {
-          const response = await axios.post(`${authUrl}/token`, {
+          const response = await axios.post(`${authUrl}/oauth/token`, {
             grant_type: 'authorization_code',
             client_id: clientId,
             client_secret: clientSecret,
@@ -48,11 +48,15 @@ export const AuthProvider = ({ children, clientId, clientSecret, redirectUri, au
 
           const token = response.data.access_token;
           localStorage.setItem('token', token);
-          const decodedToken = jwtDecode(token);
+          const userResponse = await axios.get(`${authUrl}/api/user`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-          dispatch({ type: 'LOGIN', payload: { token, user: decodedToken } });
+          dispatch({ type: 'LOGIN', payload: { token, user: userResponse.data } });
           window.history.replaceState({}, document.title, window.location.pathname); // Limpiar URL
-        } catch (error) {
+          } catch (error) {
           console.error('Error fetching token:', error.response?.data || error.message);
         }
       }
@@ -63,7 +67,7 @@ export const AuthProvider = ({ children, clientId, clientSecret, redirectUri, au
   }, [clientId, clientSecret, redirectUri, authUrl]);
 
   const login = () => {
-    const authorizationUrl = `${authUrl}/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope`;
+    const authorizationUrl = `${authUrl}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope`;
 
     window.location.href = authorizationUrl; // Redirigir a la página de autorización
   };
