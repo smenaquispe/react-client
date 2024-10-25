@@ -3,9 +3,14 @@ import BaseButton from "./BaseButton";
 
 const LoginButtonWithPassport = () => {
 
-  const { login } = useAuth();
+  const { login, setActivate } = useAuth();
 
-    return <BaseButton onClick={login} color="green" key={"button_login_with_passport"}>Login with Passport</BaseButton>;
+  const handleClick = () => {
+    setActivate(true);
+    login();
+  };
+
+    return <BaseButton onClick={handleClick} color="green" key={"button_login_with_passport"}>Login with Passport</BaseButton>;
 };
 
 export default LoginButtonWithPassport;

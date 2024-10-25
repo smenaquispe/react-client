@@ -1,6 +1,5 @@
 import LoginButton from './Buttons/LoginButton';
 import LoginButtonWithPassport from './Buttons/LoginButtonWithPassport';
-
 const LoginChoice = () => {
   return (
     <div>
