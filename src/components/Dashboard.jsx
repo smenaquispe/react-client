@@ -1,6 +1,7 @@
 import { useAuth as useCustomAuth } from 'auth-passport-provider';
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './Buttons/LogoutButton';
+import Profile from './Profile';
 
 const Dashboard = () => {
   const { user: customUser, isAuthenticated: isCustomAuth } = useCustomAuth();
@@ -14,10 +15,12 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Bienvenido, {user?.name || user?.email}</p>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
+      <div className="bg-white p-8 rounded-md shadow-lg w-full max-w-lg text-center">
+        <h1 className="text-3xl font-semibold text-gray-700 mb-4">Dashboard</h1>
+        <Profile user={user} />
         <LogoutButton />
+      </div>
     </div>
   );
 };
